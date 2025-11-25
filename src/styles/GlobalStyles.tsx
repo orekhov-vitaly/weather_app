@@ -1,7 +1,7 @@
 import { Global, css } from "@emotion/react";
 
 const globalStyles = css`
-    @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
     * {
         box-sizing: border-box;
@@ -12,7 +12,11 @@ const globalStyles = css`
         height: 100%;
         margin: 0;
         padding: 0;
-        font-family: "Lato", sans-serif;
+        font-family: "Inter", sans-serif;
+    }
+    
+    body {
+        background-image: url("images/background.jpg");
     }
 
     h1,
@@ -33,7 +37,7 @@ const globalStyles = css`
         display: flex;
         justify-content: center;
         min-height: 100%;
-        background-image: url("images/background.jpg");
+        background: rgba(29, 32, 45, 0.3);
     }
 `;
 

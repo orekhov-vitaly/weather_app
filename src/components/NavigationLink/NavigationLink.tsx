@@ -7,7 +7,7 @@ function NavigationLink({path, name}:NavigationLinkProps) {
         <SytyledNavLink
             to={path}
             style={({ isActive }) => ({
-                textDecoration: isActive ? "underline" : "none",
+                fontWeight: isActive ? "700" : "300",
             })}
         >
             {name}

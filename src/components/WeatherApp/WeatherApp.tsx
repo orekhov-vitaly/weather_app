@@ -1,5 +1,5 @@
 import Input from "components/Input/Input"
-import { WeatherAppWrapper, WeatherForm } from "./styles"
+import { City, Temp, WeatherAppWrapper, WeatherForm, WeatherHistoryBlock, WeatherHistoryData, WeatherHistoryImage, WeatherHistoryWrapper } from "./styles"
 import Button from "components/Button/Button"
 
 function WeatherApp() {
@@ -15,6 +15,22 @@ function WeatherApp() {
         />
         <Button name="Search" onClick={() => {}} />
       </WeatherForm>
+      <WeatherHistoryWrapper>
+        <WeatherHistoryBlock>
+          <WeatherHistoryData>
+            <Temp>18°</Temp>
+            <City>Colrado</City>
+          </WeatherHistoryData>
+          <WeatherHistoryImage></WeatherHistoryImage>
+        </WeatherHistoryBlock>
+        <WeatherHistoryBlock>
+          <WeatherHistoryData>
+            <Temp>18°</Temp>
+            <City>Colrado</City>
+          </WeatherHistoryData>
+          <WeatherHistoryImage></WeatherHistoryImage>
+        </WeatherHistoryBlock>
+      </WeatherHistoryWrapper>
     </WeatherAppWrapper>
   )
 }
