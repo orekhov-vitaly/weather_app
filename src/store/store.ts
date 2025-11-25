@@ -1,9 +1,10 @@
 import type { Action, ThunkAction } from "@reduxjs/toolkit"
 import { combineSlices, configureStore } from "@reduxjs/toolkit"
 import { setupListeners } from "@reduxjs/toolkit/query"
+import { weatherAppSlice } from "./redux/weatherApp/weatherAppSlice"
 
 // Шаг 8. - Передача counterSlice в combineSlice
-const rootReducer = combineSlices()
+const rootReducer = combineSlices(weatherAppSlice)
 // Infer the `RootState` type from the root reducer
 export type RootState = ReturnType<typeof rootReducer>
 

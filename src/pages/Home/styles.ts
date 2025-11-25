@@ -5,6 +5,6 @@ export const HomePage = styled.div`
   flex-direction: column;
   align-items: center;
   flex: 1;
-  padding: 120px 40px 40px;
+  padding: 200px 40px 40px;
   font-size: 30px;
 `

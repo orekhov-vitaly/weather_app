@@ -1,36 +1,84 @@
 import Input from "components/Input/Input"
-import { City, Temp, WeatherAppWrapper, WeatherForm, WeatherHistoryBlock, WeatherHistoryData, WeatherHistoryImage, WeatherHistoryWrapper } from "./styles"
+import {
+  City,
+  Temp,
+  WeatherAppWrapper,
+  WeatherForm,
+  WeatherHistoryBlock,
+  WeatherHistoryData,
+  WeatherHistoryImage,
+  WeatherHistoryWrapper,
+  Error,
+  ErrorTitle,
+  ErrorText,
+} from "./styles"
 import Button from "components/Button/Button"
+import { useAppDispatch, useAppSelector } from "store/hooks"
+import {
+  weatherAppActions,
+  weatherAppSelectors,
+} from "store/redux/weatherApp/weatherAppSlice"
+import Image from "components/Image/Image"
+import { useFormik } from "formik"
+import { WeatherFormValues } from "./types"
 
 function WeatherApp() {
+  const { data, error, status } = useAppSelector(
+    weatherAppSelectors.weatherData,
+  )
+
+  const dispatch = useAppDispatch()
+
+  const getWeather = (city: string) => {
+    dispatch(weatherAppActions.getWeather(city))
+  }
+
+  const formik = useFormik({
+    initialValues: {
+      city: "",
+    } as WeatherFormValues,
+
+    // validationSchema: schema,
+    validateOnChange: false,
+
+    onSubmit: (value: WeatherFormValues): void => {
+      getWeather(value.city)
+    },
+  })
+  
+  const resultWeathers = (
+    <WeatherHistoryBlock>
+      <WeatherHistoryData>
+        <Temp>{(data[0]?.main.temp - 273.15).toFixed(0)}°</Temp>
+        <City>{data[0]?.name}</City>
+      </WeatherHistoryData>
+      <WeatherHistoryImage>
+        <Image
+          src={`https://openweathermap.org/img/wn/${data[0]?.weather[0].icon}@2x.png`}
+        />
+      </WeatherHistoryImage>
+    </WeatherHistoryBlock>
+  )
+
   return (
     <WeatherAppWrapper>
-      <WeatherForm>
+      <WeatherForm onSubmit={formik.handleSubmit}>
         <Input
           name="city"
           id="city"
           placeholder="Enter city name"
-          value=""
-          onChange={() => {}}
+          value={formik.values.city}
+          onChange={formik.handleChange}
         />
-        <Button name="Search" onClick={() => {}} />
+        <Button name="Search" type="submit" />
       </WeatherForm>
-      <WeatherHistoryWrapper>
-        <WeatherHistoryBlock>
-          <WeatherHistoryData>
-            <Temp>18°</Temp>
-            <City>Colrado</City>
-          </WeatherHistoryData>
-          <WeatherHistoryImage></WeatherHistoryImage>
-        </WeatherHistoryBlock>
-        <WeatherHistoryBlock>
-          <WeatherHistoryData>
-            <Temp>18°</Temp>
-            <City>Colrado</City>
-          </WeatherHistoryData>
-          <WeatherHistoryImage></WeatherHistoryImage>
-        </WeatherHistoryBlock>
-      </WeatherHistoryWrapper>
+      {status === "error" && (
+        <Error>
+          <ErrorTitle>API Error</ErrorTitle>
+          <ErrorText>{error}</ErrorText>
+        </Error>
+      )}
+      <WeatherHistoryWrapper>{resultWeathers}</WeatherHistoryWrapper>
     </WeatherAppWrapper>
   )
 }

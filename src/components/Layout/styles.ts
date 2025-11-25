@@ -7,7 +7,9 @@ export const LayoutComponent = styled.div`
 `
 
 export const Header = styled.header`
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -19,6 +21,7 @@ export const Header = styled.header`
     linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1));
   border-bottom: 1px solid #d2d2d2;
   color: #474747ff;
+  z-index: 100;
 `
 
 export const Logo = styled.div`
