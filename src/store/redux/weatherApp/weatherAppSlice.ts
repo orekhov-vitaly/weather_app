@@ -43,6 +43,7 @@ export const weatherAppSlice = createAppSlice({
         },
       },
     ),
+    clearHistory: create.reducer(() => weatherAppInitialState)
   }),
   selectors: {
     weatherData: state => state,

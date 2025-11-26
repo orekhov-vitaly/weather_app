@@ -33,6 +33,10 @@ function WeatherApp() {
     dispatch(weatherAppActions.getWeather(city))
   }
 
+  const clearHistory = () => {
+    dispatch(weatherAppActions.clearHistory())
+  }
+
   const formik = useFormik({
     initialValues: {
       city: "",
@@ -45,20 +49,6 @@ function WeatherApp() {
       getWeather(value.city)
     },
   })
-  
-  const resultWeathers = (
-    <WeatherHistoryBlock>
-      <WeatherHistoryData>
-        <Temp>{(data[0]?.main.temp - 273.15).toFixed(0)}°</Temp>
-        <City>{data[0]?.name}</City>
-      </WeatherHistoryData>
-      <WeatherHistoryImage>
-        <Image
-          src={`https://openweathermap.org/img/wn/${data[0]?.weather[0].icon}@2x.png`}
-        />
-      </WeatherHistoryImage>
-    </WeatherHistoryBlock>
-  )
 
   return (
     <WeatherAppWrapper>
@@ -78,7 +68,22 @@ function WeatherApp() {
           <ErrorText>{error}</ErrorText>
         </Error>
       )}
-      <WeatherHistoryWrapper>{resultWeathers}</WeatherHistoryWrapper>
+      <WeatherHistoryWrapper>
+      {data.length > 0 && <Button name="Clear history" onClick={clearHistory} />}
+        {data.length > 0 &&
+          <WeatherHistoryBlock>
+            <WeatherHistoryData>
+              <Temp>{(data[0]?.main.temp - 273.15).toFixed(0)}°</Temp>
+              <City>{data[0]?.name}</City>
+            </WeatherHistoryData>
+            <WeatherHistoryImage>
+              <Image
+                src={`https://openweathermap.org/img/wn/${data[0]?.weather[0].icon}@2x.png`}
+              />
+            </WeatherHistoryImage>
+          </WeatherHistoryBlock>
+        }
+      </WeatherHistoryWrapper>
     </WeatherAppWrapper>
   )
 }

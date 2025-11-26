@@ -21,6 +21,7 @@ export const WeatherHistoryWrapper = styled.div`
 
 export const WeatherHistoryBlock = styled.div`
   display: flex;
+  align-items: flex-start;
   height: 180px;
   padding: 22px 36px;
   background: linear-gradient(
@@ -52,7 +53,6 @@ export const WeatherHistoryImage = styled.div`
   flex: 1;
   display: flex;
   justify-content: flex-end;
-  margin-top: -40px;
 `
 
 export const Error = styled.div`

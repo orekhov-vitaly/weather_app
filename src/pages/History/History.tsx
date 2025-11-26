@@ -1,6 +1,8 @@
 import { WeatherAppWrapper } from "components/WeatherApp/styles"
 import {
   City,
+  Error,
+  ErrorTitle,
   HistoryWrapper,
   Temp,
   WeatherHistoryBlock,
@@ -9,14 +11,22 @@ import {
   WeatherHistoryWrapper,
 } from "./styles"
 import Image from "components/Image/Image"
-import { useAppSelector } from "store/hooks"
-import { weatherAppSelectors } from "store/redux/weatherApp/weatherAppSlice"
+import { useAppDispatch, useAppSelector } from "store/hooks"
+import { weatherAppActions, weatherAppSelectors } from "store/redux/weatherApp/weatherAppSlice"
+import { v4 } from "uuid"
+import Button from "components/Button/Button"
 
 function History() {
   const { data } = useAppSelector(weatherAppSelectors.weatherData)
+
+  const dispatch = useAppDispatch()
+
+  const clearHistory = () => {
+    dispatch(weatherAppActions.clearHistory())
+  }
   const resultWeathers = data.map(item => {
     return (
-      <WeatherHistoryBlock>
+      <WeatherHistoryBlock key={v4()}>
         <WeatherHistoryData>
           <Temp>{(item?.main.temp - 273.15).toFixed(0)}°</Temp>
           <City>{item?.name}</City>
@@ -29,10 +39,20 @@ function History() {
       </WeatherHistoryBlock>
     )
   })
+
   return (
     <HistoryWrapper>
       <WeatherAppWrapper>
-        <WeatherHistoryWrapper>{resultWeathers}</WeatherHistoryWrapper>
+        <WeatherHistoryWrapper>
+          {data.length > 0 && <Button name="Clear history" onClick={clearHistory} />}
+          {resultWeathers.length > 0 ? (
+            resultWeathers
+          ) : (
+            <Error>
+              <ErrorTitle>History is empty</ErrorTitle>
+            </Error>
+          )}
+        </WeatherHistoryWrapper>
       </WeatherAppWrapper>
     </HistoryWrapper>
   )
